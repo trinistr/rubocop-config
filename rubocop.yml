@@ -1,0 +1,178 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-rake
+  - rubocop-thread_safety
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+
+Bundler/OrderedGems:
+  TreatCommentsAsGroupSeparators: false
+
+Gemspec/DependencyVersion:
+  Enabled: true
+Gemspec/OrderedDependencies:
+  TreatCommentsAsGroupSeparators: false
+
+Layout/ClassStructure:
+  Enabled: true
+Layout/EndOfLine:
+  EnforcedStyle: lf
+Layout/ExtraSpacing:
+  # Aligning by spaces does not work with proportional fonts, so it should not be used at all.
+  AllowForAlignment: false
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: consistent
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+Layout/HeredocArgumentClosingParenthesis:
+  Enabled: true
+Layout/LineLength:
+  Severity: refactor
+  Max: 100
+Layout/MultilineAssignmentLayout:
+  Enabled: true
+Layout/RedundantLineBreak:
+  Enabled: true
+  InspectBlocks: true
+
+Lint/AmbiguousBlockAssociation:
+  AllowedMethods: ['change', 'not_change']
+Lint/HeredocMethodCallPosition:
+  Enabled: true
+
+Metrics:
+  Severity: refactor
+Metrics/BlockLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+Metrics/ClassLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+Metrics/MethodLength:
+  Max: 15
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+Metrics/ModuleLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+
+Naming/InclusiveLanguage:
+  Enabled: true
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: optional
+Naming/MethodParameterName:
+  AllowNamesEndingInNumbers: false
+Naming/PredicateName:
+  # I feel that removing "has" prefix makes method names clunky. "have" is just weird though.
+  ForbiddenPrefixes: ['is_', 'have_']
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+  AllowedPatterns: ['_v\d+\z', '\Av\d+\z']
+
+Style/AutoResourceCleanup:
+  Enabled: true
+Style/BlockDelimiters:
+  # Pretty much all editors have support for braces, but do-end requires Ruby syntax support.
+  # Honestly, "always_braces" is probably the best option, but I'm too used to do-end by now.
+  EnforcedStyle: braces_for_chaining
+Style/CollectionMethods:
+  Enabled: true
+Style/CommandLiteral:
+  EnforcedStyle: mixed
+Style/ComparableClamp:
+  Enabled: true
+Style/DocumentationMethod:
+  Enabled: true
+  AllowedMethods: ['method_missing', 'respond_to_missing?']
+Style/EmptyElse:
+  EnforcedStyle: empty
+  AllowComments: true
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
+  # Debatable, "either" can also be a good option. But maybe "always" is superior?
+  EnforcedShorthandSyntax: either_consistent
+Style/Lambda:
+  # Not sure why the style guide recommends incosistent usage.
+  # For implicit `begin`, maybe.
+  EnforcedStyle: literal
+Style/LambdaCall:
+  # Why not use it if it looks good?
+  Enabled: false
+Style/MissingElse:
+  Enabled: true
+  # Using `if` without `else` is a very common pattern.
+  EnforcedStyle: case
+Style/ModuleFunction:
+  # `module_function` and `extend self` are different and should be used with intent.
+  Enabled: false
+Style/MultilineBlockChain:
+  # Ugliness is subjective and depends on the code.
+  # Metrics cops will catch most problems anyway.
+  Enabled: false
+Style/MultilineMethodSignature:
+  Enabled: true
+Style/MultipleComparison:
+  ComparisonsThreshold: 3
+Style/NegatedIf:
+  # `unless` in block form always confuses me.
+  EnforcedStyle: postfix
+Style/NumberedParametersLimit:
+  # `sort`, `each_pair`...
+  Max: 2
+Style/NumericLiterals:
+  # Values under 99999 are fine to read. This also includes port numbers.
+  AllowedPatterns: ['\d{4,5}']
+Style/OpenStructUse:
+  Enabled: true
+Style/OptionHash:
+  Enabled: true
+Style/PercentQLiterals:
+  # Consistent with StringLiterals.
+  EnforcedStyle: upper_case_q
+Style/RedundantFetchBlock:
+  SafeForConstants: true
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+Style/Send:
+  Enabled: true
+Style/StaticClass:
+  Enabled: true
+Style/StringLiterals:
+  # No special handling for literal single quote as apostrophe, nor for escapes.
+  EnforcedStyle: double_quotes
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+Style/SymbolProc:
+  # Unsure about this one.
+  Enabled: true
+  AllowMethodsWithArguments: true
+Style/TernaryParentheses:
+  EnforcedStyle: require_parentheses_when_complex
+Style/TopLevelMethodDefinition:
+  Enabled: true
+Style/TrailingCommaInArguments: &multiline_comma
+  # Using `comma` style is better for moving things around and for git changes.
+  EnforcedStyleForMultiline: no_comma
+Style/TrailingCommaInArrayLiteral:
+  <<: *multiline_comma
+Style/TrailingCommaInHashLiteral:
+  <<: *multiline_comma
+Style/UnlessLogicalOperators:
+  Enabled: true
+
+Performance/IoReadlines:
+  Enabled: true
+Performance/MapCompact:
+  Enabled: true
+Performance/MapMethodChain:
+  Enabled: true
+Performance/MethodObjectAsBlock:
+  Enabled: true
+Performance/SelectMap:
+  Enabled: true
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+RSpec/NestedGroups:
+  Max: 4
