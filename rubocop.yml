@@ -47,15 +47,15 @@ Lint/HeredocMethodCallPosition:
 
 Metrics:
   Severity: refactor
-Metrics/BlockLength:
+Metrics/BlockLength: &count_as_one
   CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
 Metrics/ClassLength:
-  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  <<: *count_as_one
 Metrics/MethodLength:
   Max: 15
-  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  <<: *count_as_one
 Metrics/ModuleLength:
-  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  <<: *count_as_one
 
 Naming/InclusiveLanguage:
   Enabled: true
@@ -172,7 +172,30 @@ Performance/MethodObjectAsBlock:
 Performance/SelectMap:
   Enabled: true
 
+RSpec/BeNil:
+  EnforcedStyle: be
+RSpec/ContextWording:
+  Prefixes: ['when', 'with', 'without', 'if']
+RSpec/DescribeClass:
+  IgnoredMetadata:
+    type: ['interaction']
+RSpec/DescribedClass:
+  # A fairly common case is defining an anonymous class, where `described_class` is not available.
+  SkipBlocks: true
+RSpec/DescribedClassModuleWrapping:
+  Enabled: true
+RSpec/ExampleLength:
+  <<: *count_as_one
+RSpec/ExampleWording:
+  DisallowedExamples: ['works', 'happy path']
+RSpec/MessageSpies:
+  # It makes more sense to use that which makes more sense.
+  Enabled: false
+RSpec/MultipleExpectations:
+  # Sometimes it makes sense to check several things consecutively.
+  Max: 3
 RSpec/MultipleMemoizedHelpers:
+  # Helpers shared between examples may cause a larger-than-usual amount to be available.
   Max: 10
 RSpec/NestedGroups:
   Max: 4
