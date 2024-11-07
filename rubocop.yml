@@ -76,6 +76,9 @@ Style/BlockDelimiters:
   # Pretty much all editors have support for braces, but do-end requires Ruby syntax support.
   # Honestly, "always_braces" is probably the best option, but I'm too used to do-end by now.
   EnforcedStyle: braces_for_chaining
+Style/CaseEquality:
+  # This may be confusing for JS developers, but the operator is very useful.
+  Enabled: false
 Style/CollectionMethods:
   Enabled: true
 Style/CommandLiteral:
