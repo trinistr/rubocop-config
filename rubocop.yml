@@ -1,3 +1,8 @@
+<%
+  rubocop_version = Gem::Version.new(RuboCop::Version::STRING)
+  raise "RuboCop versions below 1.0 are not supported" if rubocop_version < '1.0'
+%>
+
 AllCops:
   NewCops: enable
 
@@ -8,9 +13,12 @@ Bundler/OrderedGems: &ordered_dependencies
   # If comments are used as group separators, every single commented gem starts a new group.
   TreatCommentsAsGroupSeparators: false
 
+<% if rubocop_version >= '1.29' %>
 Gemspec/DependencyVersion:
   # Gems should list supported versions, as there is no lockfile to ensure compatibility.
   Enabled: true
+<% end %>
+<% if rubocop_version >= '1.44' %>
 Gemspec/DevelopmentDependencies:
   # See https://github.com/orgs/rubygems/discussions/5065.
   # The gist is: specifying development dependencies in the gemspec is unclear and doesn't work well,
@@ -18,11 +26,44 @@ Gemspec/DevelopmentDependencies:
   # Bundler is a part of RubyGems, and using it for development is almost always superior.
   Enabled: true
   EnforcedStyle: Gemfile
+<% end %>
 Gemspec/OrderedDependencies:
   <<: *ordered_dependencies
 
 Layout/ClassStructure:
   Enabled: true
+  ExpectedOrder:
+     - module_inclusion
+     - constants
+     - association
+     - macros
+     - public_class_methods
+     - public_attribute_macros
+     - public_delegate
+     - initializer
+     - public_methods
+     - protected_attribute_macros
+     - protected_methods
+     - private_attribute_macros
+     - private_delegate
+     - private_methods
+  Categories:
+    module_inclusion:
+      - include
+      - prepend
+      - extend
+    attribute_macros:
+      - attr_accessor
+      - attr_reader
+      - attr_writer
+    association:
+      - has_many
+      - has_and_belongs_to_many
+      - has_one
+      - belongs_to
+    macros:
+      - validates
+      - validate
 Layout/EndOfLine:
   EnforcedStyle: lf
 Layout/ExtraSpacing:
@@ -41,19 +82,27 @@ Layout/LineLength:
   Max: 100
 Layout/MultilineAssignmentLayout:
   Enabled: true
+<% if rubocop_version >= '1.13' %>
 Layout/RedundantLineBreak:
   Enabled: true
   InspectBlocks: true
+<% end %>
 
+<% if rubocop_version >= '1.13' %>
 Lint/AmbiguousBlockAssociation:
   AllowedMethods: ['change', 'not_change']
+<% end %>
 Lint/HeredocMethodCallPosition:
   Enabled: true
 
 Metrics:
   Severity: refactor
 Metrics/BlockLength: &count_as_one
-  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+<% if rubocop_version >= '1.5' %>    - method_call <% end %>
 Metrics/ClassLength:
   <<: *count_as_one
 Metrics/MethodLength:
@@ -62,8 +111,10 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   <<: *count_as_one
 
+<% if rubocop_version >= '1.18' %>
 Naming/InclusiveLanguage:
   Enabled: true
+<% end %>
 Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: optional
 Naming/MethodParameterName:
@@ -71,15 +122,35 @@ Naming/MethodParameterName:
 Naming/PredicateName:
   # I feel that removing "has" prefix makes method names clunky. "have" is just weird though.
   ForbiddenPrefixes: ['is_', 'have_']
+<% if rubocop_version >= '1.4' %>
 Naming/VariableNumber:
   EnforcedStyle: snake_case
-  AllowedPatterns: ['_v\d+\z', '\Av\d+\z']
+  AllowedPatterns:
+    # API_V1, API_V1_URL, v1_url, v1, etc.
+    - '(?:\A|_)[Vv]\d+(?:\z|_)'
+  AllowedIdentifiers:
+    - abs2
+    # Default values:
+    - TLS1_1
+    - TLS1_2
+    - capture3
+    - iso8601
+    - rfc1123_date
+    - rfc822
+    - rfc2822
+    - rfc3339
+    - x86_64
+<% end %>
 
+<% if rubocop_version < '1.21' %>
+Style/AsciiComments:
+  Enabled: false
+<% end %>
 Style/AutoResourceCleanup:
   Enabled: true
 Style/BlockDelimiters:
   # Pretty much all editors have support for braces, but do-end requires Ruby syntax support.
-  # Honestly, "always_braces" is probably the best option, but I'm too used to do-end by now.
+  # However, braces don't support implicit begin-end blocks.
   EnforcedStyle: braces_for_chaining
 Style/CaseEquality:
   # This may be confusing for JS developers, but the operator is very useful.
@@ -88,8 +159,10 @@ Style/CollectionMethods:
   Enabled: true
 Style/CommandLiteral:
   EnforcedStyle: mixed
+<% if rubocop_version >= '1.44' %>
 Style/ComparableClamp:
   Enabled: true
+<% end %>
 Style/DocumentationMethod:
   Enabled: true
   AllowedMethods: ['method_missing', 'respond_to_missing?']
@@ -98,11 +171,12 @@ Style/EmptyElse:
   AllowComments: true
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys
-  # Debatable, "either" can also be a good option. But maybe "always" is superior?
-  EnforcedShorthandSyntax: either_consistent
+Style/IpAddresses:
+  Enabled: true
+  AllowedAddresses: ['127.0.0.1', '::1']
 Style/Lambda:
   # Not sure why the style guide recommends incosistent usage.
-  # The only problem is that braces don't work with `rescue`.
+  # Be aware that braces don't support implicit begin-end blocks.
   EnforcedStyle: literal
 Style/LambdaCall:
   # Why not use it if it looks good?
@@ -120,8 +194,10 @@ Style/MultilineBlockChain:
   Enabled: false
 Style/MultilineMethodSignature:
   Enabled: true
+<% if rubocop_version >= '1.1' %>
 Style/MultipleComparison:
   ComparisonsThreshold: 3
+<% end %>
 Style/NegatedIf:
   # `unless` in block form always confuses me.
   EnforcedStyle: postfix
@@ -130,9 +206,11 @@ Style/NumberedParametersLimit:
   Max: 2
 Style/NumericLiterals:
   # Values under 99999 are fine to read. This also includes port numbers.
-  AllowedPatterns: ['\d{4,5}']
+  MinDigits: 6
+<% if rubocop_version >= '1.23' %>
 Style/OpenStructUse:
   Enabled: true
+<% end %>
 Style/OptionHash:
   Enabled: true
 Style/PercentQLiterals:
@@ -140,25 +218,35 @@ Style/PercentQLiterals:
   EnforcedStyle: upper_case_q
 Style/RedundantFetchBlock:
   SafeForConstants: true
+<% if rubocop_version >= '1.40' %>
+Style/RequireOrder:
+  Enabled: true
+<% end %>
 Style/RescueStandardError:
   EnforcedStyle: implicit
 Style/Send:
   Enabled: true
+<% if rubocop_version >= '1.3' %>
 Style/StaticClass:
   Enabled: true
+<% end %>
 Style/StringLiterals:
   # No special handling for literal single quote as apostrophe, nor for escapes.
   EnforcedStyle: double_quotes
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
+<% if rubocop_version >= '1.40' %>
 Style/SymbolProc:
   # Unsure about this one.
   Enabled: true
   AllowMethodsWithArguments: true
+<% end %>
 Style/TernaryParentheses:
   EnforcedStyle: require_parentheses_when_complex
+<% if rubocop_version >= '1.15' %>
 Style/TopLevelMethodDefinition:
   Enabled: true
+<% end %>
 Style/TrailingCommaInArguments: &multiline_comma
   # Using `comma` style is better for moving things around and for git changes.
   EnforcedStyleForMultiline: no_comma
@@ -166,48 +254,79 @@ Style/TrailingCommaInArrayLiteral:
   <<: *multiline_comma
 Style/TrailingCommaInHashLiteral:
   <<: *multiline_comma
+<% if rubocop_version >= '1.11' %>
 Style/UnlessLogicalOperators:
-  Enabled: true
-
-<% if !`grep -- '^ *- rubocop-performance' .rubocop.yml`.empty? %>
-Performance/IoReadlines:
-  Enabled: true
-Performance/MapCompact:
-  Enabled: true
-Performance/MapMethodChain:
-  Enabled: true
-Performance/MethodObjectAsBlock:
-  Enabled: true
-Performance/SelectMap:
   Enabled: true
 <% end %>
 
+<% if !`grep -- '^ *- rubocop-performance' .rubocop.yml`.empty? %>
+<% performance_version = Gem::Version.new(RuboCop::Performance::Version::STRING) %>
+<% if performance_version >= '1.7' %>
+Performance/IoReadlines:
+  Enabled: true
+<% end %>
+<% if performance_version >= '1.11' %>
+Performance/MapCompact:
+  Enabled: true
+<% end %>
+<% if performance_version >= '1.19' %>
+Performance/MapMethodChain:
+  Enabled: true
+<% end %>
+<% if performance_version >= '1.9' %>
+Performance/MethodObjectAsBlock:
+  Enabled: true
+<% end %>
+<% if performance_version >= '1.11' %>
+Performance/SelectMap:
+  Enabled: true
+<% end %>
+<% end %>
+
 <% if !`grep -- '^ *- rubocop-rspec' .rubocop.yml`.empty? %>
+<% rspec_version = Gem::Version.new(RuboCop::RSpec::Version::STRING) %>
+<% if rspec_version >= '2.10' %>
 RSpec/BeNil:
   EnforcedStyle: be
+<% end %>
+<% if rspec_version >= '1.20' %>
 RSpec/ContextWording:
-  Prefixes: ['when', 'with', 'without', 'if']
-RSpec/DescribeClass:
-  IgnoredMetadata:
-    type: ['interaction']
+  Prefixes: ['when', 'with', 'without', 'if', 'and']
+<% end %>
+<% if rspec_version >= '1.0' %>
 RSpec/DescribedClass:
   # A fairly common case is defining an anonymous class, where `described_class` is not available.
   SkipBlocks: true
+<% end %>
+<% if rspec_version >= '1.37' %>
 RSpec/DescribedClassModuleWrapping:
   Enabled: true
+<% end %>
+<% if rspec_version >= '2.3' %>
 RSpec/ExampleLength:
   <<: *count_as_one
+<% end %>
+<% if rspec_version >= '2.13' %>
 RSpec/ExampleWording:
   DisallowedExamples: ['works', 'happy path']
+<% end %>
+<% if rspec_version >= '1.9' %>
 RSpec/MessageSpies:
   # It makes more sense to use that which makes more sense.
   Enabled: false
+<% end %>
+<% if rspec_version >= '1.21' %>
 RSpec/MultipleExpectations:
   # Sometimes it makes sense to check several things consecutively.
   Max: 3
+<% end %>
+<% if rspec_version >= '1.43' %>
 RSpec/MultipleMemoizedHelpers:
   # Helpers shared between examples may cause a larger-than-usual amount to be available.
   Max: 10
+<% end %>
+<% if rspec_version >= '2.13' %>
 RSpec/NestedGroups:
-  Max: 4
+  AllowedGroups: ['describe', 'path']
+<% end %>
 <% end %>
