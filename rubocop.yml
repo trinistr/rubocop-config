@@ -1,14 +1,25 @@
 AllCops:
-  TargetRubyVersion: 3.1
   NewCops: enable
 
-Bundler/OrderedGems:
+Bundler/GemComment:
+  Enabled: true
+  OnlyFor: ['restrictive_version_specifiers']
+Bundler/OrderedGems: &ordered_dependencies
+  # If comments are used as group separators, every single commented gem starts a new group.
   TreatCommentsAsGroupSeparators: false
 
 Gemspec/DependencyVersion:
+  # Gems should list supported versions, as there is no lockfile to ensure compatibility.
   Enabled: true
+Gemspec/DevelopmentDependencies:
+  # See https://github.com/orgs/rubygems/discussions/5065.
+  # The gist is: specifying development dependencies in the gemspec is unclear and doesn't work well,
+  # though there are certain, mostly cosmetic benefits to it.
+  # Bundler is a part of RubyGems, and using it for development is almost always superior.
+  Enabled: true
+  EnforcedStyle: Gemfile
 Gemspec/OrderedDependencies:
-  TreatCommentsAsGroupSeparators: false
+  <<: *ordered_dependencies
 
 Layout/ClassStructure:
   Enabled: true
@@ -91,7 +102,7 @@ Style/HashSyntax:
   EnforcedShorthandSyntax: either_consistent
 Style/Lambda:
   # Not sure why the style guide recommends incosistent usage.
-  # For implicit `begin`, maybe.
+  # The only problem is that braces don't work with `rescue`.
   EnforcedStyle: literal
 Style/LambdaCall:
   # Why not use it if it looks good?
