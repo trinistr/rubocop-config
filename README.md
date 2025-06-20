@@ -1,15 +1,14 @@
 # rubocop-config
-My Rubocop configuration to be shared between different projects.
+
+My [RuboCop](https://rubygems.org/gems/rubocop) configuration to be shared between different projects.
 
 This configuration is somewhat opinionated and does not always conform to Ruby style guide.
 It will also probably change over time.
 
-Intended to be used with these tested versions of gems (install through `gem install` or `Gemfile`):
-- rubocop (1.72.2)
-- rubocop-performance (1.24.0)
-- rubocop-rake (0.7.1)
-- rubocop-rspec (3.5.0)
-- rubocop-thread_safety (0.7.0)
+Currently contains configuration for:
+- rubocop
+- rubocop-performance
+- rubocop-rspec
 
 ## Usage
 
@@ -21,14 +20,27 @@ inherit_from:
 # `require:` before rubocop 1.72
 plugins:
   - rubocop-performance
-  - rubocop-rake
   - rubocop-rspec
-  - rubocop-thread_safety
+  # ...other plugins
+
+# Your configuration here
 ```
+
+RuboCop will download the configuration from GitHub and cache it locally.
+When the configuration changes, RuboCop will download the new version automatically.
+
+## Gems' versions
+
+This configuration was originally written based on these versions:
+- rubocop (1.72.2)
+- rubocop-performance (1.24.0)
+- rubocop-rspec (3.5.0)
+
+Later versions should probably work (unless a major version changes cops), previous versions probably will work too.
 
 ## Configuration
 
-Using all or any of Rubocop plugins is not required, you can just not include them in your config.
-All plugin cops' configurations are surrounded with a `grep` test, as Rubocop does not like unknown cop configurations (this creates a requirement for a root `.rubocop.yml` file).
+Using all or any of RuboCop plugins is not required, you can just not include them in your config.
+All plugin cops' configurations are surrounded with a `grep` test, as RuboCop does not like unknown cop configurations (this creates a requirement for a root `.rubocop.yml` file).
 
-Cop settings can be overridden as usual, see [Rubocop Configuration](https://docs.rubocop.org/rubocop/configuration.html) for details.
+Cop settings can be overridden as usual, see [RuboCop Configuration](https://docs.rubocop.org/rubocop/configuration.html), especially [inheritance](https://docs.rubocop.org/rubocop/configuration.html#inheritance) section for details.
