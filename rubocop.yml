@@ -120,9 +120,19 @@ Naming/MemoizedInstanceVariableName:
   EnforcedStyleForLeadingUnderscores: optional
 Naming/MethodParameterName:
   AllowNamesEndingInNumbers: false
+<% if rubocop_version >= '1.76' %>
+Naming/PredicateMethod:
+  # There are way too many false positives for this cop,
+  # it's better to have your own good judgement..
+  Enabled: false
+<% end %>
+<% if rubocop_version < '1.76' %>
 Naming/PredicateName:
+<% else %>
+Naming/PredicatePrefix:
+<% end %>
   # I feel that removing "has" prefix makes method names clunky. "have" is just weird though.
-  ForbiddenPrefixes: ['is_', 'have_']
+  ForbiddenPrefixes: ['is_', 'have_', 'does_']
 <% if rubocop_version >= '1.4' %>
 Naming/VariableNumber:
   EnforcedStyle: snake_case
