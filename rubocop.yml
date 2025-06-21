@@ -1,10 +1,11 @@
+AllCops:
+  # Automatically enable pending cops.
+  NewCops: enable
+
 <%
   rubocop_version = Gem::Version.new(RuboCop::Version::STRING)
   raise "RuboCop versions below 1.0 are not supported" if rubocop_version < '1.0'
 %>
-
-AllCops:
-  NewCops: enable
 
 Bundler/GemComment:
   Enabled: true
