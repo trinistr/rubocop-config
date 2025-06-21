@@ -61,10 +61,10 @@ what is loaded in this configuration.
 
 ## Gems' versions
 
-This configuration was originally written based on these versions:
-- rubocop (1.72.2)
-- rubocop-performance (1.24.0)
-- rubocop-rspec (3.5.0)
+This configuration is written based on these versions:
+- rubocop (1.76.0)
+- rubocop-performance (1.25.0)
+- rubocop-rspec (3.6.0)
 
 However, the only hard requirement is `"rubocop", "~> 1.0"`.
 All cops introduced later, and all plugins' cops are protected by version checks.
