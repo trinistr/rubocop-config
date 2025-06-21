@@ -170,6 +170,15 @@ Style/DocumentationMethod:
 Style/EmptyElse:
   EnforcedStyle: empty
   AllowComments: true
+<% if rubocop_version >= '1.73' %>
+Style/EndlessMethod:
+  Enabled: true
+  EnforcedStyle: require_single_line
+<% end %>
+<% if rubocop_version >= '1.77' %>
+Style/FetchEnvVar:
+  DefaultToNil: false
+<% end %>
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys
 Style/IpAddresses:
@@ -253,8 +262,14 @@ Style/TrailingCommaInArguments: &multiline_comma
   EnforcedStyleForMultiline: no_comma
 Style/TrailingCommaInArrayLiteral:
   <<: *multiline_comma
+<% if rubocop_version >= '1.73' %>
+  EnforcedStyleForMultiline: diff_comma
+<% end %>
 Style/TrailingCommaInHashLiteral:
   <<: *multiline_comma
+<% if rubocop_version >= '1.73' %>
+  EnforcedStyleForMultiline: diff_comma
+<% end %>
 <% if rubocop_version >= '1.11' %>
 Style/UnlessLogicalOperators:
   Enabled: true
@@ -310,6 +325,12 @@ RSpec/ExampleLength:
 <% if rspec_version >= '2.13' %>
 RSpec/ExampleWording:
   DisallowedExamples: ['works', 'happy path']
+<% end %>
+<% if rspec_version >= '3.6' %>
+RSpec/IncludeExamples:
+  # Changing `include_examples` to `it_behaves_like` can break things easily.
+  # And this is kind of the purpose of this cop!
+  Enabled: false
 <% end %>
 <% if rspec_version >= '1.9' %>
 RSpec/MessageSpies:
