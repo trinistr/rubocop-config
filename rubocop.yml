@@ -356,3 +356,12 @@ RSpec/NestedGroups:
   AllowedGroups: ['describe', 'path']
 <% end %>
 <% end %>
+
+<% if !`grep -- '^ *- rubocop-thread_safety' .rubocop.yml`.empty? %>
+<% thread_safety_version = Gem::Version.new(RuboCop::ThreadSafety::Version::STRING) %>
+ThreadSafety/NewThread:
+  Exclude:
+    # Don't bother detecting threads in tests, they must be there for a reason.
+    - tests/**/*
+    - spec/**/*
+<% end %>

@@ -12,12 +12,12 @@ Currently contains configuration for:
 - [rubocop](https://github.com/rubocop/rubocop)
 - [rubocop-performance](https://github.com/rubocop/rubocop-performance)
 - [rubocop-rspec](https://github.com/rubocop/rubocop-rspec)
+- [rubocop-thread_safety](https://github.com/rubocop/rubocop-thread_safety)
 
 > [!TIP]
 > Recommended extra plugins:
-> - [rubocop-packaging](https://github.com/utkarsh2102/rubocop-packaging)
+> - [rubocop-packaging](https://github.com/utkarsh2102/rubocop-packaging) (for gems)
 > - [rubocop-rake](https://github.com/rubocop/rubocop-rake)
-> - [rubocop-thread_safety](https://github.com/rubocop/rubocop-thread_safety)
 >
 > Even more extra for Rails projects:
 > - [rubocop-capybara](https://github.com/rubocop/rubocop-capybara)
@@ -35,6 +35,7 @@ inherit_from:
 plugins:
   - rubocop-performance
   - rubocop-rspec
+  - rubocop-thread_safety
   # ...other plugins
 # require:
 #  # older plugins
@@ -65,10 +66,12 @@ This configuration is written based on these versions:
 - rubocop (1.76.0)
 - rubocop-performance (1.25.0)
 - rubocop-rspec (3.6.0)
+- rubocop-thread_safety (0.7.3)
 
 However, the only hard requirement is `"rubocop", "~> 1.0"`.
 All cops introduced later, and all plugins' cops are protected by version checks.
-Later versions of gems will probably work, unless a major version changes cops too much.
+Later versions of gems will probably work, unless a major version changes cops too much,
+or cops are renamed.
 
 ## Additional configuration
 
