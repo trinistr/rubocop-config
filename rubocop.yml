@@ -325,6 +325,7 @@ RSpec/DescribedClass:
 <% if rspec_version >= '2.3' %>
 RSpec/ExampleLength:
   <<: *count_as_one
+  Max: 10
 <% end %>
 <% if rspec_version >= '2.13' %>
 RSpec/ExampleWording:
@@ -344,7 +345,7 @@ RSpec/MessageSpies:
 <% if rspec_version >= '1.21' %>
 RSpec/MultipleExpectations:
   # Sometimes it makes sense to check several things consecutively.
-  Max: 3
+  Max: 5
 <% end %>
 <% if rspec_version >= '1.43' %>
 RSpec/MultipleMemoizedHelpers:
