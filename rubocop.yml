@@ -322,10 +322,6 @@ RSpec/DescribedClass:
   # A fairly common case is defining an anonymous class, where `described_class` is not available.
   SkipBlocks: true
 <% end %>
-<% if rspec_version >= '1.37' %>
-RSpec/DescribedClassModuleWrapping:
-  Enabled: true
-<% end %>
 <% if rspec_version >= '2.3' %>
 RSpec/ExampleLength:
   <<: *count_as_one
