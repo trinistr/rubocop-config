@@ -103,6 +103,8 @@ Metrics/BlockLength: &count_as_one
     - array
     - hash
     - heredoc
+  Exclude:
+    - Rakefile
 <% if rubocop_version >= '1.5' %>    - method_call <% end %>
 Metrics/ClassLength:
   <<: *count_as_one
