@@ -113,6 +113,10 @@ Metrics/MethodLength:
   <<: *count_as_one
 Metrics/ModuleLength:
   <<: *count_as_one
+  Exclude:
+    # Support for module-wrapped tests, see RSpec/DescribedClassModuleWrapping
+    - spec/**/*
+    - test/**/*
 
 <% if rubocop_version >= '1.18' %>
 Naming/InclusiveLanguage:
@@ -365,6 +369,6 @@ RSpec/NestedGroups:
 ThreadSafety/NewThread:
   Exclude:
     # Don't bother detecting threads in tests, they must be there for a reason.
-    - tests/**/*
     - spec/**/*
+    - tests/**/*
 <% end %>
