@@ -2,8 +2,8 @@
 
 My [RuboCop](https://rubygems.org/gems/rubocop) configuration to be shared between different projects.
 
-Similar in spirit to [rubocop-rails-omakase](https://github.com/rails/rubocop-rails-omakase),
-but with actual rules and style.
+Somewhat similar to [rubocop-rails-omakase](https://github.com/rails/rubocop-rails-omakase),
+but with significantly stricter/stronger rules and style, mostly based on default configurations.
 
 This configuration is somewhat opinionated and does not always conform to Ruby style guide.
 It will also probably change over time.
