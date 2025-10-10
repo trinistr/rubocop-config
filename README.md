@@ -64,6 +64,7 @@ what is loaded in this configuration.
 
 This configuration is written based on these versions:
 - rubocop (1.76.0)
+- rubocop-packaging (0.6.0)
 - rubocop-performance (1.25.0)
 - rubocop-rspec (3.6.0)
 - rubocop-thread_safety (0.7.3)

@@ -372,3 +372,13 @@ ThreadSafety/NewThread:
     - spec/**/*
     - tests/**/*
 <% end %>
+
+<% if !`grep -- '^ *- rubocop-packaging' .rubocop.yml`.empty? %>
+<% packaging_version = Gem::Version.new(RuboCop::Packaging::VERSION) %>
+<% if packaging_version >= '0.2' %>
+Packaging/RequireRelativeHardcodingLib:
+  Exclude:
+    # bin/ is used for development, not for packaging.
+    - bin/**/*
+<% end %>
+<% end %>
