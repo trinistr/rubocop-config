@@ -93,6 +93,11 @@ Layout/RedundantLineBreak:
 Lint/AmbiguousBlockAssociation:
   AllowedMethods: ['change', 'not_change']
 <% end %>
+<% if rubocop_version >= '1.21' %>
+Lint/AmbiguousOperatorPrecedence:
+  # I'm so tired of this cop flagging math operators. WHY?
+  Enabled: false
+<% end %>
 Lint/HeredocMethodCallPosition:
   Enabled: true
 

@@ -10,13 +10,13 @@ It will also probably change over time.
 
 Currently contains configuration for:
 - [rubocop](https://github.com/rubocop/rubocop)
+- [rubocop-packaging](https://github.com/utkarsh2102/rubocop-packaging) (for gems)
 - [rubocop-performance](https://github.com/rubocop/rubocop-performance)
 - [rubocop-rspec](https://github.com/rubocop/rubocop-rspec)
 - [rubocop-thread_safety](https://github.com/rubocop/rubocop-thread_safety)
 
 > [!TIP]
 > Recommended extra plugins:
-> - [rubocop-packaging](https://github.com/utkarsh2102/rubocop-packaging) (for gems)
 > - [rubocop-rake](https://github.com/rubocop/rubocop-rake)
 >
 > Even more extra for Rails projects:
@@ -33,6 +33,7 @@ inherit_from:
   - https://raw.githubusercontent.com/trinistr/rubocop-config/main/rubocop.yml
 
 plugins:
+  - rubocop-packaging
   - rubocop-performance
   - rubocop-rspec
   - rubocop-thread_safety
