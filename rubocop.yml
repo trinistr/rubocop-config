@@ -134,7 +134,7 @@ Naming/MethodParameterName:
 <% if rubocop_version >= '1.76' %>
 Naming/PredicateMethod:
   # There are way too many false positives for this cop,
-  # it's better to have your own good judgement..
+  # it's better to have your own good judgement.
   Enabled: false
 <% end %>
 <% if rubocop_version < '1.76' %>
@@ -328,7 +328,7 @@ RSpec/BeNil:
 RSpec/ContextWording:
   Prefixes: ['when', 'with', 'without', 'if', 'and']
 <% end %>
-<% if rspec_version >= '1.0' %>
+<% if rspec_version >= '1.0' && rspec_version < '3.9.0' %>
 RSpec/DescribedClass:
   # A fairly common case is defining an anonymous class, where `described_class` is not available.
   SkipBlocks: true
