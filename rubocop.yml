@@ -294,7 +294,9 @@ Style/UnlessLogicalOperators:
   Enabled: true
 <% end %>
 
-<% if !`grep -- '^ *- rubocop-performance' .rubocop.yml`.empty? %>
+# rubocop-performance configuration
+
+<% if defined?(RuboCop::Performance) %>
 <% performance_version = Gem::Version.new(RuboCop::Performance::Version::STRING) %>
 <% if performance_version >= '1.7' %>
 Performance/IoReadlines:
@@ -318,7 +320,9 @@ Performance/SelectMap:
 <% end %>
 <% end %>
 
-<% if !`grep -- '^ *- rubocop-rspec' .rubocop.yml`.empty? %>
+# rubocop-rspec configuration
+
+<% if defined?(RuboCop::RSpec) %>
 <% rspec_version = Gem::Version.new(RuboCop::RSpec::Version::STRING) %>
 <% if rspec_version >= '2.10' %>
 RSpec/BeNil:
@@ -369,7 +373,9 @@ RSpec/NestedGroups:
 <% end %>
 <% end %>
 
-<% if !`grep -- '^ *- rubocop-thread_safety' .rubocop.yml`.empty? %>
+# rubocop-thread_safety configuration
+
+<% if defined?(RuboCop::ThreadSafety) %>
 <% thread_safety_version = Gem::Version.new(RuboCop::ThreadSafety::Version::STRING) %>
 ThreadSafety/NewThread:
   Exclude:
@@ -378,7 +384,9 @@ ThreadSafety/NewThread:
     - tests/**/*
 <% end %>
 
-<% if !`grep -- '^ *- rubocop-packaging' .rubocop.yml`.empty? %>
+# rubocop-packaging configuration
+
+<% if defined?(RuboCop::Packaging) %>
 <% packaging_version = Gem::Version.new(RuboCop::Packaging::VERSION) %>
 <% if packaging_version >= '0.2' %>
 Packaging/RequireRelativeHardcodingLib:
